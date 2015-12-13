@@ -1,0 +1,21 @@
+#!/bin/sh
+if [ ! -d $HOME/Dropbox ]
+  then
+  echo "No Dropbox destination folder"
+  exit 1
+fi
+
+DEST=$HOME/Dropbox/dotbackup
+
+ls -a $HOME | egrep "^\.z(prof|sh|lo)" |
+rsync -vL --files-from - $HOME $DEST
+
+if [ -n $HOME/.gitconfig ]
+  then
+  rsync -v $HOME/.gitconfig $DEST
+fi
+
+if [ -n $HOME/.eslintrc ]
+  then
+  rsync -v $HOME/.eslintrc $DEST
+fi
